@@ -3,24 +3,19 @@ import PropTypes from 'prop-types';
 
 class App extends Component {
   state = {
-    num : 0
-  };
+    isLoading : true
+  }
 
-  //plus() { this.setState({num:1})} not working
-  plus = () =>{
-    this.setState(current => ({num : current.num +1}));
-  };
-
-  minus = () => {
-    this.setState(current => ({num : current.num -1}));
-  };
-
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({isLoading : false});
+    }, 5000);
+  }
+ 
   render() {
     return (
     <div>
-      <h1>Number is {this.state.num}</h1>
-      <button onClick={this.plus}>Plus</button>
-      <button onClick={this.minus}>Minus</button>
+      <h1>{this.state.isLoading ? "Loading..." : "I'm ready"}</h1>
     </div>
     );
   };
