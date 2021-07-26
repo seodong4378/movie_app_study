@@ -1,54 +1,20 @@
 import React, {Component} from "react";
-import axios from "axios";
-import Movie from "./Movie";
-import "./App.css"
+import {HashRouter, Route} from "react-router-dom";
+import Home from "./routes/Home";
+import About from "./routes/About";
+import Navigator from "./components/Navigator";
+import Details from "./routes/Details";
+import "./App.css";
 
-class App extends Component {
-  state = {
-    isLoading : true,
-    movies : []
-  }
-
-  getMovies = async () =>  {
-    const movieFromDb = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json?sort_by=rating");
-    console.log(movieFromDb, "start getMovies");
-    this.setState({ movies :movieFromDb.data.data.movies , isLoading: false });
-  }
-
-  componentDidMount () {
-    this.getMovies();
-  }
- 
-  render() {
-    const { isLoading, movies } = this.state;
-    return (
-      <section className="container">
-        {isLoading
-          ? (
-            <div className="loader">
-              <span className="loader__text">Loading...</span>
-            </div>
-          )
-          : (
-            <div className="movies">
-              {movies.map(movie => (
-                <Movie
-                  key={movie.id}
-                  id={movie.id}
-                  year={movie.year}
-                  title={movie.title}
-                  summary={movie.summary}
-                  poster={movie.medium_cover_image}
-                  genres={movie.genres}
-                />
-                ))
-              }
-            </div>
-          ) 
-          }
-      </section>
-    );
-  }
+function App() {
+  return (
+    <HashRouter>
+      <Navigator />
+      <Route path="/" exact={true} component={Home}></Route>
+      <Route path="/about" component={About}></Route>
+      <Route paht="/movie/:id" component={Details}></Route>
+    </HashRouter>
+  )
 }
 
 export default App;
