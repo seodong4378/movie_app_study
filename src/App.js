@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   getMovies = async () =>  {
-    const movieFromDb = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json");
+    const movieFromDb = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json?sort_by=rating");
     console.log(movieFromDb, "start getMovies");
     this.setState({ movies :movieFromDb.data.data.movies , isLoading: false });
   }
@@ -39,6 +39,7 @@ class App extends Component {
                   title={movie.title}
                   summary={movie.summary}
                   poster={movie.medium_cover_image}
+                  genres={movie.genres}
                 />
                 ))
               }
